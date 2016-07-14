@@ -43,33 +43,44 @@
               </form>
             </div>
           </div>
-          <div class="row center" ng-controller="loginCtrl as logCtrl">
+          <div class="row center">
             <div class="row center">
               Already have an account?
-              <span id="download-button" class="teal-text" ng-click="logCtrl.showLoginFunc()"><u>Login</u></span>
+              <span data-target="modal2" class="teal-text modal-trigger"><u>Login</u></span>
             </div>
-            <div class="row center">
-              <form ng-show="logCtrl.showLogin">
+          </div>
+
+          <!-- Modal Structure -->
+          <div id="modal2" class="modal">
+            <div class="modal-content">
+              <form>
                 <div class="row center">
-                  <div class="input-field col s6">
+                  <div class="input-field col s10">
                     <i class="material-icons prefix">account_circle</i>
                     <input id="icon_prefix" type="text" class="validate">
                     <label for="icon_prefix">Username</label>
                   </div>
                 </div>
                 <div class="row center">
-                  <div class="input-field col s6">
+                  <div class="input-field col s10">
                     <i class="material-icons prefix">vpn_key</i>
                     <input id="icon_key" type="password" class="validate">
                     <label for="icon_key">Password</label>
                   </div>
                 </div>
-                <submit class="btn-large waves-effect waves-light red lighten-1">Login</submit>
               </form>
+            </div>
+            <div class="modal-footer">
+              <a ui-sref="tracker" class=" btn-large modal-action modal-close waves-effect waves-light red lighten-1">Login</a>
             </div>
           </div>
 
-
+          <script>
+          $(document).ready(function(){
+              // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+              $('.modal-trigger').leanModal();
+            });
+          </script>
 
     </div>
 </div>

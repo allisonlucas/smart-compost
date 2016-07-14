@@ -3,7 +3,6 @@
     .config(configRouter)
     .controller('homeCtrl', homeController)
     .controller('signUpCtrl', signUpController)
-    .controller('loginCtrl', loginController)
     .controller('dropdownCtrl', dropdownController)
     .controller('chartCtrl', chartController)
     .controller('listCtrl', listController)
@@ -21,6 +20,11 @@ $( document ).ready(function() {
     closeOnClick: false
   })
 })
+
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
 
 
 function configRouter($stateProvider, $urlRouterProvider){
@@ -68,21 +72,6 @@ function signUpController() {
             sCtrl.button = 'Show form'
         } else {
             sCtrl.button = 'Hide form'
-        }
-    }
-}
-
-function loginController() {
-    var logCtrl = this;
-
-    logCtrl.button = 'Show form'
-    logCtrl.showLogin = false
-    logCtrl.showLoginFunc = function() {
-        logCtrl.showLogin = !logCtrl.showLogin
-        if (logCtrl.showLogin === false) {
-            logCtrl.button = 'Show form'
-        } else {
-            logCtrl.button = 'Hide form'
         }
     }
 }
