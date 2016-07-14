@@ -1,0 +1,44 @@
+<!-- DISPLAY TEMP GRAPH IN D3 -->
+<div class="temp-graph">
+    <h3>Temperature</h3>
+</div>
+<!-- DISPLAY HUMIDITY GRAPH IN D3 -->
+<div class="humidity-graph">
+    <h3>Humidity</h3>
+    <div class="showAlert" id="humidity">
+        <h3>Alert: Your compost is too dry. Add water.</h3>
+    </div>
+</div>
+<hr>
+<!-- DISPLAY DONUT GRAPH IN D3 -->
+<div class="donut-div">
+    <h3>C:N Ratio</h3>
+    <div class="showAlert" ng-show="c.showLessBrown">
+        <h3>Alert: Too much brown material for optimal composting. Add more green.</h3>
+    </div>
+    <div class="showAlert" ng-show="c.showMoreBrown">
+        <h3>Alert: Too much green material for optimal composting. Add more brown.</h3>
+    </div>
+    <!--  DISPLAY DONUT WITH D3 -->
+    <div class="svg-div">
+    </div>
+</div>
+<!--  FORM TO UPDATE DONUT -->
+<form class="form" ng-submit="c.submit()">
+  <h3>Material added:</h3>
+  <div class="form-fields">
+    <label>Weight:</label>
+    <input type="number" class="form-control" ng-model="c.weight" name="weight">
+  </div>
+  <div class="form-fields">
+    <label for="color">Type:</label>
+    <select class="form-control" id="color" ng-model="c.color">
+      <option>Brown</option>
+      <option>Green</option>
+    </select>
+  </div>
+  <div class="form-fields">
+    <button ng-show="c.showFunc()" type="submit" class="btn">Update</button>
+  </div>
+</form>
+</main>

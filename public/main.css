@@ -1,0 +1,130 @@
+#index-banner {
+  height: 100px;
+}
+
+#form-header {
+  margin-top: 25px;
+}
+
+#logo-container {
+  margin-left: 25px;
+}
+
+#dropdown1 {
+  padding-left: 15px;
+  padding-top: 25px;
+  min-width: 350px;
+}
+
+/*.dropdown-content {
+  min-width: 350px;
+}*/
+
+.p-image {
+  opacity: 0.9;
+}
+
+.svg-div {
+    margin: 25px;
+}
+
+#donut text {
+    fill: white;
+}
+
+#donut {
+    float: left;
+}
+
+rect {
+    fill: #2ca02c;
+    opacity: 0.75;
+    stroke: none;
+}
+
+.clear-header {
+    height: 50px;
+}
+
+.temp-graph,
+.humidity-graph {
+	stroke: black;
+	stroke-width: 1;
+	fill: none;
+	display: inline-block;
+	vertical-align: top
+}
+
+.temp-graph {
+    margin-right: 25px;
+}
+
+.temp-graph h3,
+.humidity-graph h3 {
+    margin-bottom: 0px;
+}
+
+.x-axis .tick,
+.y-axis .tick{
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+.x-axis path,
+.y-axis path {
+      stroke-width: 0;
+}
+
+.x-axis,
+.y-axis {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.x-axis text,
+.y-axis text,
+g text {
+    stroke: none;
+    fill: black
+}
+
+h3 {
+    font-size: 21px;
+}
+
+.showAlert {
+    background-color: #ad494a;
+    border-radius: 3px;
+    color: white;
+    width: 600px;
+}
+
+.showAlert h3 {
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+}
+
+#humidity {
+    width: 500px;
+}
+
+.form {
+    margin-left: 25px;
+}
+
+.form-fields {
+    padding-right: 10px;
+    display: inline-block;
+}
+
+.form-control {
+    width: 75px;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    display: block;
+}
