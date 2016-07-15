@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <header ng-controller="dropdownCtrl as dCtrl">
+    <header>
       <nav id="nav-color" class="red lighten-1">
         <div class="nav-wrapper">
           <a ui-sref="home" id="logo-container" class="brand-logo">Smart Compost</a>
@@ -74,10 +74,17 @@
         </div>
       </div>
 
+      <script>
+        $(document).ready(function(){
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal()
+          })
+      </script>
+
     </header>
 
     <main>
-        <div class="wrapper" ng-controller="homeCtrl as hCtrl"></div>
+        <!-- <div class="wrapper" ng-controller="homeCtrl as hCtrl"></div> -->
         <div class="wrapper" ng-controller="listCtrl as lCtrl"></div>
         <div class="wrapper" ng-controller="chartCtrl as c"></div>
         <ui-view></ui-view>
@@ -103,6 +110,12 @@
         <!--  Scripts-->
         <script src="js/materialize.js"></script>
         <script src="js/init.js"></script>
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="./modules/app.js"></script>
+        <script type="text/javascript" src="./modules/chartModule.js"></script>
+        <script type="text/javascript" src="./modules/routerModule.js"></script>
+        <script type="text/javascript" src="./modules/userFactoryModule.js"></script>
+        <script type="text/javascript" src="./modules/homeModule.js"></script>
+        <script type="text/javascript" src="./modules/signupModule.js"></script>
+        <script type="text/javascript" src="./modules/listModule.js"></script>
   </body>
 </html>

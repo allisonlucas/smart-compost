@@ -1,103 +1,6 @@
 (function () {
-  angular.module('CompostIt', ['ui.router'])
-    .config(configRouter)
-    .controller('homeCtrl', homeController)
-    .controller('signUpCtrl', signUpController)
-    .controller('dropdownCtrl', dropdownController)
+  angular.module('chartModule', [])
     .controller('chartCtrl', chartController)
-    .controller('listCtrl', listController)
-    configRouter.$inject = ['$stateProvider', '$urlRouterProvider']
-
-$( document ).ready(function() {
-  $(".dropdown-button").dropdown({
-    inDuration: 300,
-    outDuration: 225,
-    constrain_width: false, // Does not change width of dropdown to that of the activator
-    hover: false, // Do not activate on hover
-    gutter: 0, // Spacing from edge
-    belowOrigin: true, // Displays dropdown below the button
-    alignment: 'left', // Displays dropdown with edge aligned to the left of button
-    closeOnClick: false
-  })
-})
-
-$(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
-
-
-function configRouter($stateProvider, $urlRouterProvider){
-  $stateProvider
-    .state('home',{
-    url: '/',
-    templateUrl: 'home.html',
-    controller: 'homeCtrl as hCtrl'
-    })
-    .state('compost-this',{
-      url: '/compost-this',
-      templateUrl: 'partials/compost-this.html',
-      controller: 'listCtrl as lCtrl'
-    })
-    .state('tracker',{
-      url: '/tracker',
-      templateUrl: 'partials/tracker.html',
-      controller: 'chartCtrl as c'
-    })
-  $urlRouterProvider.otherwise('/')
-}
-
-//controller function
-function homeController(){
-  var hCtrl = this
-  $('.parallax').parallax()
-  // $(".dropdown-button").dropdown({hover: false})
-}
-
-function dropdownController() {
-  var dCtrl = this
-  dCtrl.preventDefault = function(e) {
-    e.preventDefault()
-  }
-}
-
-function signUpController() {
-    var sCtrl = this
-
-    sCtrl.button = 'Show form'
-    sCtrl.show = false
-    sCtrl.showFunc = function() {
-        sCtrl.show = !sCtrl.show
-        if (sCtrl.show === false) {
-            sCtrl.button = 'Show form'
-        } else {
-            sCtrl.button = 'Hide form'
-        }
-    }
-}
-
-function listController(){
-  var lCtrl = this
-  lCtrl.title = "Compost This! --> 100 Things you CAN compost"
-
-  // var request = require('request')
-  // var cheerio = require('cheerio')
-
-//   lCtrl.scrape = request('http://www.smallfootprintfamily.com/100-things-you-can-compost',  function (error, response, html) {
-//     if (!error && response.statusCode == 200) {
-//       // console.log(div:nth-child(1))
-//       // console.log(html)
-//       var $ = cheerio.load(html)
-//       post = $("ol").text()
-//       console.log(post)
-//       return post
-//       // var postItems = post.split('\n')
-//       // console.log(postItems)
-//       // compostArr.push(postItems)
-//       // console.log(compostArr)
-//     }
-//   })
-}
 
 function chartController () {
   var c = this
@@ -195,11 +98,11 @@ function chartController () {
 
       setInterval(function () {
         var j = data.day[13] + 1
-        console.log(j)
+        // console.log(j)
         data.day.push(j)
-        console.log(data.day)
+        // console.log(data.day)
         data.day.shift() // remove the first element of the array
-        console.log(data.day)
+        // console.log(data.day)
         var v = data.temp.shift() // remove the first element of the array
         data.temp.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
         d3.select('#graph').remove()
@@ -300,11 +203,11 @@ function chartController () {
 
       setInterval(function () {
         var j = lineData.day[13] + 1
-        console.log(j)
+        // console.log(j)
         lineData.day.push(j)
-        console.log(lineData.day)
+        // console.log(lineData.day)
         lineData.day.shift() // remove the first element of the array
-        console.log(lineData.day)
+        // console.log(lineData.day)
         var v = lineData.humidity.shift() // remove the first element of the array
         lineData.humidity.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
         d3.select('#humidityGraph').remove()
@@ -336,45 +239,45 @@ function chartController () {
       brown: [2, 1, 1, 0.5]
     }
 
-    console.log('Green starting percent:' + c.data[0].value)
-    console.log('Brown starting percent:' + c.data[1].value)
+    // console.log('Green starting percent:' + c.data[0].value)
+    // console.log('Brown starting percent:' + c.data[1].value)
 
     c.submit = function () {
-      console.log('Submit Data')
+      // console.log('Submit Data')
       if (c.color == 'Brown') {
         c.weightObj.brown.push(c.weight)
-        console.log(c.weightObj.brown)
+        // console.log(c.weightObj.brown)
         var brownTotal = c.weightObj.brown.reduce(function (a, b) {
           return a + b
         })
-        console.log("Brown Total: ", brownTotal)
+        // console.log("Brown Total: ", brownTotal)
         var greenTotal = c.weightObj.green.reduce(function (a, b) {
           return a + b
         })
-        console.log("Green Total: ", greenTotal)
+        // console.log("Green Total: ", greenTotal)
         var percentBrown = (brownTotal / (greenTotal + brownTotal)) * 100
         var percentGreen = (greenTotal / (greenTotal + brownTotal)) * 100
         c.data[1].value = percentBrown
         c.data[0].value = percentGreen
-        console.log('New percent brown: ' + c.data[1].value)
-        console.log('New percent green: ' + c.data[0].value)
+        // console.log('New percent brown: ' + c.data[1].value)
+        // console.log('New percent green: ' + c.data[0].value)
       } else {
         c.weightObj.green.push(c.weight)
-        console.log(c.weightObj.green)
+        // console.log(c.weightObj.green)
         var greenTotal = c.weightObj.green.reduce(function (a, b) {
           return a + b
         })
-        console.log("Green Total: ", greenTotal)
+        // console.log("Green Total: ", greenTotal)
         var brownTotal = c.weightObj.brown.reduce(function (a, b) {
           return a + b
         })
-        console.log("Brown Total: ", brownTotal)
+        // console.log("Brown Total: ", brownTotal)
         var percentGreen = (greenTotal / (greenTotal + brownTotal)) * 100
         var percentBrown = (brownTotal / (greenTotal + brownTotal)) * 100
         c.data[0].value = percentGreen
         c.data[1].value = percentBrown
-        console.log('New percent brown: ' + c.data[1].value)
-        console.log('New percent green: ' + c.data[0].value)
+        // console.log('New percent brown: ' + c.data[1].value)
+        // console.log('New percent green: ' + c.data[0].value)
       }
       c.weight = ''
       c.color = ''
