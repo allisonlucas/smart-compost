@@ -7,10 +7,6 @@
 
   <div class="container">
       <div class="section">
-        <h3>{{hCtrl.name}}</h3>
-        <ul>
-          <li ng-repeat="user in hCtrl.users">Name: {{user.username}}</li>
-        </ul>
           <h1 id="title" class="header center teal-text">Compost Made Easy</h1>
           <div class="row center">
               <h5 class="header col s12 light">Analyze your compost to achieve optimal <br>decomposition and nutrient-rich soil</h5>
@@ -18,32 +14,32 @@
           <div class="row center" ng-controller="signUpCtrl as sCtrl">
               <button id="download-button" class="btn-large waves-effect waves-light red lighten-1" ng-click="sCtrl.showFunc()">Get Started</button>
               <div class="row center">
-                <form ng-show="sCtrl.show" ng-submit="hCtrl.createUser(hCtrl.newUser)">
+                <form ng-submit="hCtrl.createUser(hCtrl.newUser)" ng-show="sCtrl.show">
                   <div class="row center">
                   <h5 id="form-header" class="header col s12 light">Fill out your information below and start tracking your compost today!</h5>
                   </div>
                   <div class="row center">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">account_circle</i>
-                      <input id="icon_prefix" type="text" class="validate" ng-model="hCtrl.newUser.username">
+                      <input id="icon_prefix" type="text" name="username" class="validate" ng-model="hCtrl.newUser.username">
                       <label for="icon_prefix">Username</label>
                     </div>
                   </div>
                   <div class="row center">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">email</i>
-                      <input id="icon_email" type="email" class="validate" ng-model="hCtrl.newUser.email">
+                      <input id="icon_email" type="email" name="email" class="validate" ng-model="hCtrl.newUser.email">
                       <label for="icon_email">Email</label>
                     </div>
                   </div>
                   <div class="row center">
                     <div class="input-field col s6">
                       <i class="material-icons prefix">vpn_key</i>
-                      <input id="icon_key" type="password" class="validate" ng-model="hCtrl.newUser.password">
+                      <input id="icon_key" type="password" name="password" class="validate" ng-model="hCtrl.newUser.password">
                       <label for="icon_key">Password</label>
                     </div>
                   </div>
-                  <submit class="btn-large waves-effect waves-light red lighten-1" ng-click="sCtrl.signUp">Sign-Up</submit>
+                  <button type="submit" class="btn-large waves-effect waves-light red lighten-1">Sign-Up</button>
                 </form>
               </div>
             </div>

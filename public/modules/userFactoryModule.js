@@ -6,11 +6,11 @@
       var uFactory = {}
       //SEND A REQUEST TO OUR SERVER AND RETURN A PROMISE
       uFactory.create = function(user){
-        return $http.post('/api/users', user)
+        return $http.post('/api/v1/users', user)
       }
 
       uFactory.all = function(){
-        return $http.get('/api/users')
+        return $http.get('/api/v1/users')
       }
 
       return uFactory

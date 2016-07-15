@@ -6,7 +6,6 @@
     function signUpController() {
         var sCtrl = this
 
-        sCtrl.button = 'Show form'
         sCtrl.show = false
         sCtrl.showFunc = function() {
             sCtrl.show = !sCtrl.show
