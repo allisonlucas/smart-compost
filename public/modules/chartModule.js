@@ -8,7 +8,8 @@ function chartController () {
   // ==================================================
   // D3 CODE TO POPULATE TEMP GRAPH
   // ==================================================
-  d3.json("tempdb.json", function (data) {
+  c.createTempGraph = function() {
+    d3.json("tempdb.json", function (data) {
 
     function displayGraph (id, width, height, margin, interpolation, updateDelay) {
       // create an SVG element inside the #graph div that fills 100% of the div
@@ -107,13 +108,15 @@ function chartController () {
         data.temp.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
         d3.select('#graph').remove()
         draw()
-      }, updateDelay)
-    }
+        }, updateDelay)
+      }
 
-    displayGraph('#graph', 500, 250, 45, 'basis', 1500)
+      displayGraph('#graph', 500, 250, 45, 'basis', 1500)
 
-  })
-        // ==================================================
+    })
+  }
+  
+    // ==================================================
     // D3 CODE TO POPULATE HUMIDITY GRAPH
     // ==================================================
     function displayHumidityGraph (id, width, height, margin, interpolation, updateDelay) {

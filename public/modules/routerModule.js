@@ -21,6 +21,11 @@
           templateUrl: 'partials/tracker.html',
           controller: 'chartCtrl as c'
         })
+        .state('welcome',{
+          url: '/welcome',
+          templateUrl: 'partials/welcome.html',
+          controller: 'homeCtrl as hCtrl'
+        })
       $urlRouterProvider.otherwise('/')
     }
 }())

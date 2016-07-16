@@ -3,12 +3,12 @@ var User = require('../models/users')
 
 //EXPORT CONTROLLER OBJECTS
 module.exports = {
-    // CREATE PLATES CONTROLLER FOR ROUTE HANDLERS
+    // CREATE USERS CONTROLLER FOR ROUTE HANDLERS
     usersController: {
       all: function(req, res){
           console.log("Querying db for all user objects!")
           User.find({},function(error,users){
-              if(error) console.log('Err finding plates: ', error)
+              if(error) console.log('Err finding users: ', error)
               if(!error){
                   res.json(users)
               }

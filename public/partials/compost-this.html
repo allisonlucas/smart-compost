@@ -1,4 +1,5 @@
 <div ng-controller="listCtrl as lCtrl">
-<h2>{{ lCtrl.title }}</h2>
-<div>{{ lCtrl.scrape }}></div>
+  <button id="download-button" class="btn-large waves-effect waves-light red lighten-1" ng-click="lCtrl.findAll()">What can I compost?</button>
+  <div>{{ lCtrl.list }}></div>
+  <button id="download-button" class="btn-large waves-effect waves-light red lighten-1" ng-click="lCtrl.wordcloud()">wordcloud?</button>
 </div>
