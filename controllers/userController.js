@@ -23,6 +23,15 @@ module.exports = {
                 res.json(user)
               }
           })
-      }//end of create method
+      },//end of create method
+      login: function(req,res){
+        console.log('Username: ', req.body.username)
+        User.findOne({username: req.body.username}, function(error, user){
+          if(error) console.log('error finding one user', error)
+          if(!error) {
+            res.json(user)
+          }
+        })
+      }
     }//end of my users controller
 }

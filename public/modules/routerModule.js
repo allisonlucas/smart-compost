@@ -1,5 +1,5 @@
 //IIFE FOR VARIABLE ENCAPSULATION
-// (function() {
+(function() {
   angular.module('routerModule', ['ui.router'])
     .config(configRouter)
     configRouter.$inject = ['$stateProvider', '$urlRouterProvider']
@@ -21,16 +21,6 @@
           templateUrl: 'partials/tracker.html',
           controller: 'chartCtrl as c'
         })
-        // .state('users',{
-        //     url : '/',
-        //     templateUrl : 'home.html',
-        //     controller : 'usersCtrl as uCtrl'
-        // })
-        .state('userPage', {
-            url : '/users/:id',
-            templateUrl : '/partials/tracker.html',
-            controller : 'upCtrl as upCtrl'
-        })
       $urlRouterProvider.otherwise('/')
     }
-// }())
+}())

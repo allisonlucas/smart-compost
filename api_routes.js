@@ -8,6 +8,8 @@ var
     apiRouter.route('/users')
       .get(ctrls.usersController.all)
       .post(ctrls.usersController.create)
+    apiRouter.route('/users/:id')
+      .post(ctrls.usersController.login)
 
 
 module.exports = apiRouter

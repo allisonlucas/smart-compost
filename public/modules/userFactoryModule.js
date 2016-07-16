@@ -13,6 +13,11 @@
         return $http.get('/api/v1/users')
       }
 
+      uFactory.login = function(user){
+        console.log('login function in the factory')
+        return $http.post('/api/v1/users/:id', user)
+      }
+
       return uFactory
     }
 

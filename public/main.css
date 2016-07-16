@@ -11,13 +11,16 @@
 }
 
 #dropdown1 {
-  padding-left: 15px;
-  padding-top: 25px;
-  min-width: 350px;
+  min-width: 150px;
 }
 
 .p-image {
   opacity: 0.9;
+}
+
+#tracker-wrapper {
+  margin: 25px;
+  margin-bottom: 50px;
 }
 
 .svg-div {

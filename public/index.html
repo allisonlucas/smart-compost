@@ -35,16 +35,38 @@
 
 </head>
 
-<body>
+<body ng-controller="homeCtrl as hCtrl">
     <header>
       <nav id="nav-color" class="red lighten-1">
         <div class="nav-wrapper">
           <a ui-sref="home" id="logo-container" class="brand-logo">Smart Compost</a>
           <ul class="right hide-on-med-and-down">
-            <li><a ui-sref="tracker">TRACKER</a></li>
-            <li><a ui-sref="compost-this">COMPOST THIS</a></li>
-            <li><a href="collapsible.html">THE BASICS</a></li>
-            <li><button data-target="modal1" class="btn-flat red lighten-1 modal-trigger white-text">Login</button></li>
+            <li><a ui-sref="tracker">Tracker</a></li>
+            <li><a ui-sref="compost-this">Compost This</a></li>
+            <li><a href="collapsible.html">The Basics</a></li>
+            <li>
+              <span ng-if="!hCtrl.loggedInUser">
+                <a href="" data-target="modal1" class="modal-trigger">Login</a>
+              </span>
+            </li>
+            <!-- Dropdown Trigger -->
+            <li>
+              <span ng-if="hCtrl.loggedInUser">
+                <a class="dropdown-button" data-beloworigin="true" alignment="right" constrainwidth="true" ui-sref="tracker" data-activates="dropdown1">{{ hCtrl.loggedInUser }}<i class="material-icons right">arrow_drop_down</i></a>
+                <!-- Dropdown Structure -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="#!">Profile</a></li>
+                  <li><a href="#!">Account</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#!">Logout</a></li>
+                </ul>
+                <script>
+                  $(document).ready(function(){
+                    $(".dropdown-button").dropdown()
+                  })
+                </script>
+              </span>
+            </li>
           </ul>
         </div>
       </nav>
@@ -52,25 +74,25 @@
       <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
-          <form>
+          <form ng-submit="hCtrl.login(hCtrl.user)">
             <div class="row center">
               <div class="input-field col s10">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="icon_prefix" type="text" class="validate">
+                <input id="icon_prefix" type="text" class="validate" ng-model="hCtrl.user.username">
                 <label for="icon_prefix">Username</label>
               </div>
             </div>
             <div class="row center">
               <div class="input-field col s10">
                 <i class="material-icons prefix">vpn_key</i>
-                <input id="icon_key" type="password" class="validate">
+                <input id="icon_key" type="password" class="validate" ng-model="hCtrl.user.password">
                 <label for="icon_key">Password</label>
               </div>
             </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn-large modal-action modal-close waves-effect waves-light red lighten-1">Login</button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <a ui-sref="tracker" class=" btn-large modal-action modal-close waves-effect waves-light red lighten-1">Login</a>
         </div>
       </div>
 
@@ -84,8 +106,6 @@
     </header>
 
     <main>
-        <div class="wrapper" ng-controller="listCtrl as lCtrl"></div>
-        <div class="wrapper" ng-controller="chartCtrl as c"></div>
         <ui-view></ui-view>
     </main>
 
