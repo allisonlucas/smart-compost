@@ -1,4 +1,4 @@
-<div ng-controller="homeCtrl as hCtrl">
+<div ng-init="hCtrl.parallaxCall()">
   <div id="index-banner" class="parallax-container">
       <div class="parallax p-image">
           <img src="background1.jpg" alt="Unsplashed background img 1">
@@ -39,7 +39,7 @@
                       <label for="icon_key">Password</label>
                     </div>
                   </div>
-                  <button type="submit" class="btn-large waves-effect waves-light red lighten-1" ui-sref="welcome">Sign-Up</button>
+                  <button type="submit" class="btn-large waves-effect waves-light red lighten-1" >Sign-Up</button>
                 </form>
               </div>
             </div>

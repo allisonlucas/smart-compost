@@ -1,17 +1,45 @@
-<div id="tracker-wrapper" ng-controller="chartCtrl as c">
+<div id="tracker-wrapper">
 
   <!-- DISPLAY TEMP GRAPH IN D3 -->
-  <div class="temp-graph">
-      <h3>Temperature</h3>
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light temp-graph activator">
+      <div class="showAlert" id="humidity" ng-show="c.tooHot">
+          <h3>Alert: Your compost is too hot.</h3>
+      </div>
+      <div class="showAlert" id="humidity2" ng-show="c.tooCold">
+          <h3>Alert: Your compost is too cold. Cover to keep heat in.</h3>
+      </div>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator teal-text">Temperature<i class="material-icons right">more_vert</i></span>
+      <p class="grey-text text-darken-2">This graph displays your current compost temperature. Ideal temperature is between 140-160 degrees Farenheit.</p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Maintaining Ideal Compost Temperature<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
   </div>
+
   <!-- DISPLAY HUMIDITY GRAPH IN D3 -->
-  <div class="humidity-graph">
-      <h3>Humidity</h3>
-      <div class="showAlert" id="humidity">
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light humidity-graph activator">
+      <div class="showAlert" id="humidity" ng-show="c.addWater">
           <h3>Alert: Your compost is too dry. Add water.</h3>
       </div>
+      <div class="showAlert" id="humidity2" ng-show="c.letDry">
+          <h3>Alert: Your compost is too moist. Cover if raining, otherwise uncover and let contents dryout.</h3>
+      </div>
+    </div>
+    <div class="card-content">
+      <span class="card-title activator teal-text">Soil Moisture<i class="material-icons right">more_vert</i></span>
+      <p class="grey-text text-darken-2">This graph displays your current compost soil moisture. Ideal moisture is between 40-60%.</p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Maintaining Ideal Compost Soil Moisture<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
   </div>
-  <hr>
+
   <!-- DISPLAY DONUT GRAPH IN D3 -->
   <div class="donut-div">
       <h3>C:N Ratio</h3>

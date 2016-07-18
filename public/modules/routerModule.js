@@ -9,7 +9,7 @@
         .state('home',{
         url: '/',
         templateUrl: 'home.html',
-        controller: 'homeCtrl as hCtrl'
+        // controller: 'homeCtrl as hCtrl'
         })
         .state('compost-this',{
           url: '/compost-this',
@@ -24,7 +24,7 @@
         .state('welcome',{
           url: '/welcome',
           templateUrl: 'partials/welcome.html',
-          controller: 'homeCtrl as hCtrl'
+          // controller: 'welcomeCtrl as wCtrl'
         })
       $urlRouterProvider.otherwise('/')
     }

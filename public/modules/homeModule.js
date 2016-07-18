@@ -7,7 +7,6 @@
 
     function homeController(userFact, $state){
       var hCtrl = this
-
       hCtrl.loggedInUser = ''
 
       hCtrl.findAll = function(){
@@ -26,6 +25,8 @@
         //MAKE THE API CALL FROM YOUR FACTORY OBJECT
         userFact.create(user)
           .then(function (response) {
+            $state.go('welcome')
+            hCtrl.loggedInUser = response.data.username
             console.log("response from server create method",response)
           }, function(error){
             console.log("err in create method", error)
@@ -35,19 +36,22 @@
       // SUBMIT METHOD FOR ANGULAR LOGIN FORM
       hCtrl.login = function(user){
         userFact.login(user)
-          .then(function (response) {
-            console.log('response from server login method', response)
-            $state.go('tracker')
-            // console.log(response.data.username)
-            hCtrl.loggedInUser = response.data.username
-          }, function(error){
-            console.log('err in login method', error)
-          })
+        .then(function (response) {
+          console.log('response from server login method', response)
+          $state.go('tracker')
+          hCtrl.loggedInUser = response.data.username
+          console.log(hCtrl)
+        }, function(error){
+          console.log('err in login method', error)
+        })
       }
+      console.log(this);
 
-      // AJAX call for parallax function
-      $('.parallax').parallax()
-
+      hCtrl.parallaxCall = function () {
+        // AJAX call for parallax function
+        $('.parallax').parallax()
+        console.log($('.parallax'))
+      }
     }
 
   }())

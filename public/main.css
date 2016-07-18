@@ -59,13 +59,19 @@ rect {
     height: 50px;
 }
 
+.card {
+  width: 595px;
+  display: inline-block;
+}
+
 .temp-graph,
 .humidity-graph {
 	stroke: black;
 	stroke-width: 1;
 	fill: none;
+  margin: 25px;
 	display: inline-block;
-	vertical-align: top
+	/*vertical-align: top*/
 }
 
 .temp-graph {
