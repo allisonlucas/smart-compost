@@ -1,7 +1,7 @@
 <div id="tracker-wrapper">
 
   <!-- DISPLAY TEMP GRAPH IN D3 -->
-  <div class="card">
+  <div class="card graph-image">
     <div class="card-image waves-effect waves-block waves-light temp-graph activator">
       <div class="showAlert" id="humidity" ng-show="c.tooHot">
           <h3>Alert: Your compost is too hot.</h3>
@@ -21,7 +21,7 @@
   </div>
 
   <!-- DISPLAY HUMIDITY GRAPH IN D3 -->
-  <div class="card">
+  <div class="card graph-image">
     <div class="card-image waves-effect waves-block waves-light humidity-graph activator">
       <div class="showAlert" id="humidity" ng-show="c.addWater">
           <h3>Alert: Your compost is too dry. Add water.</h3>
@@ -41,7 +41,7 @@
   </div>
 
   <!-- DISPLAY DONUT GRAPH IN D3 -->
-  <div class="card donut-div">
+  <div class="card graph-image donut-div">
     <div class="card-image activator">
       <div class="showAlert" ng-show="c.showLessBrown">
           <h3>Alert: Too much brown material for optimal composting. Add more green.</h3>
@@ -81,8 +81,9 @@
       <p class="grey-text text-darken-2">This gauge displays your current compost soil content ratio. Ideal ratio of carbon-rich to nitrogen-rich material is 50:50 by weight.</p>
     </div>
     <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Maintaining Ideal Compost Soil Content Ratio<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+      <span class="card-title grey-text text-darken-4">Maintaining an Ideal Content Ratio<i class="material-icons right">close</i></span>
+      <p>An effective compost pile is a careful balance of dry or brown material that contains carbon (like leaves or paper) and wet or green things that contain nitrogen (like food scraps or rabbit droppings). If you add a lot of shredded paper or cardboard to the pile, you will need to balance it with a nice heap of fresh grass clippings or horse manure.</p>
+      <p id="copyright">Content from <a class="teal-text" href ="http://www.smallfootprintfamily.com/100-things-you-can-compost#ixzz4ExfMd0Xa">Small Footprint Family</a> © 2015 Small Footprint Family™</p>
     </div>
   </div>
 </div>

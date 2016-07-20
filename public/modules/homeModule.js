@@ -9,6 +9,10 @@
       var hCtrl = this
       hCtrl.loggedInUser = ''
 
+      hCtrl.logout = function () {
+        hCtrl.loggedInUser = ''
+      }
+
       hCtrl.findAll = function(){
         userFact.all()
           .then(function(response){

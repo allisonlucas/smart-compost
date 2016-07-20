@@ -7,43 +7,57 @@ chartController.$inject = ['$scope']
 function chartController ($scope) {
   var c = this
 
+  // Wait until page is loaded to run d3 code
   $scope.$on('$viewContentLoaded', function(event){
-    console.log('this is running after page load', event)
-    // Clear interval
+
+    // Clear interval to prevent duplicates on page revisit
     clearInterval(window.tempClear)
     clearInterval(window.humidityClear)
+    // Remove element to prevent duplicates on page revisit
     d3.select('#graph').remove()
     d3.select('#humidityGraph').remove()
-    // $('.temp-graph').html('')
-    // $('.humidity-graph').html('')
 
+    // ==================================================
+    // D3 CODE TO POPULATE TEMP GRAPH
+    // ==================================================
 
-  // ==================================================
-  // D3 CODE TO POPULATE TEMP GRAPH
-  // ==================================================
+    d3.csv("temp_moisture_read.csv", tempFunc)
 
-    d3.json("compostHardcodeDb.json", function (data) {
+    function tempFunc (data) {
+
+      var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse
+
+      data.forEach(function(d) {
+        d.day = parseDate(d.day)
+        d.temp = +d.temp
+      })
 
       c.displayTempGraph = function (id, width, height, margin, interpolation, updateDelay) {
 
         function draw () {
+
+          var minDay = data[0].day
+          var maxDay = data[data.length - 1].day
+          var minTemp = d3.min(data, function(d){return d.temp})
+          var maxTemp = d3.max(data, function(d){return d.temp})
+
           var graph = d3.select(".temp-graph").append('svg:svg').attr("id", "graph").attr('width', '550').attr('height', '250').attr('margin', '45')
 
           // X scale
-          var xRange = d3.scale.linear().domain([d3.min(data.day), d3.max(data.day)]).range([margin, width - margin])
+          var xRange = d3.time.scale().domain([minDay, maxDay]).range([margin, width - margin])
           // Y scale
-          var yRange = d3.scale.linear().domain([d3.min(data.temp) - 20, d3.max(data.temp) + 20]).range([height - margin, margin])
+          var yRange = d3.scale.linear().domain([minTemp - 20, d3.max([maxTemp + 20, data[0].idealTempMax])]).range([height - margin, margin])
 
           // Plot the x and y axes & append
           var xAxis = d3.svg.axis()
             .scale(xRange)
             .orient('bottom')
-            .ticks(14)
-            .tickSize(-(d3.max(data.temp) + 20), 0, 0)
+            .ticks(6)
+            .tickSize((-maxTemp + 20), 0, 0)
 
           var yAxis = d3.svg.axis()
             .scale(yRange)
-            .ticks(6)
+            .ticks(5)
             .orient('left')
             .tickSize(-(width - margin * 2), 0, 0)
 
@@ -69,91 +83,120 @@ function chartController ($scope) {
 
           // Add the ideal temp area rectangle
           graph.append('svg:rect')
-            .attr('x', xRange(data.day[0]))
-            .attr('y', yRange(data.idealTempMax[0]))
-            .attr('width', xRange(d3.max(data.day)) - margin)
-            .attr('height', (yRange(data.idealTempMin[0]) - yRange(data.idealTempMax[0])))
+            .attr('x', xRange(minDay))
+            .attr('y', yRange(data[0].idealTempMax))
+            .attr('width', xRange(maxDay) - margin)
+            .attr('height', (yRange(data[0].idealTempMin) - yRange(data[0].idealTempMax)))
             .attr('class', 'area')
             .attr('opacity', 0.5)
 
           graph.append('svg:g')
             .append("text")
             .attr("x", width)
-            .attr("y",  yRange(data.idealTempMax[0]) + 30)
+            .attr("y",  yRange(data[0].idealTempMax) + 30)
             .style("text-anchor", "middle")
             .text("Ideal Range")
 
           // Plot the temp line & append it
           var lineFunc = d3.svg.line()
             .x(function (d, i) {
-              return xRange(data.day[i])
+              return xRange(d.day)
             })
             .y(function (d, i) {
-              return yRange(data.temp[i])
+              return yRange(d.temp)
             })
             .interpolate(interpolation)
 
           graph.append('svg:path')
-            .attr('d', lineFunc(data.temp))
+            .attr('d', lineFunc(data))
 
           graph.selectAll('path')
-            .data([data.temp]) // set the new data
-            .attr('d', lineFunc(data.temp)) // apply the new data values
-        }
+            .data([data]) // set the new data
+            .attr('d', lineFunc(data)) // apply the new data values
+
+        } // draw function
+
         draw()
 
         window.tempClear = setInterval(function () {
-          var j = data.day[13] + 1
-          data.day.push(j)
-          data.day.shift() // remove the first element of the array
-          var v = data.temp.shift() // remove the first element of the array
-          data.temp.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
-          d3.select('#graph').remove()
-          draw()
+
+          d3.csv("temp_moisture_read_live.csv", tempFunc2)
+
+          function tempFunc2 (data2) {
+            data2.forEach(function(d) {
+              d.day = parseDate(d.day)
+              d.temp = +d.temp
+            })
+
+            data.push(data2[0])
+            console.log('data after push: ', data)
+            data.shift()
+            console.log('data after shift: ', data)
+            // remove the old graph
+            d3.select('#graph').remove()
+            draw()
+
+          }
 
           // --- ALERT SHOW / HIDE FUNCTION --- //
-          c.tooHot = false
-          c.tooCold = false
+          // c.tooHot = false
+          // c.tooCold = false
+          //
+          // c.tempAlert = function() {
+          //   if (data.temp[(data.length - 1).temp] > data[0].idealTempMax) {
+          //     c.tooHot = true
+          //   } else if (data.temp[(data.length - 1).temp] < data[0].idealTempMin) {
+          //     c.tooCold = true
+          //   }
+          // }
+          // c.tempAlert()
 
-          c.tempAlert = function() {
-            if (data.temp[data.temp.length - 1] > data.idealTempMax) {
-              c.tooHot = true
-            } else if (data.temp[data.temp.length - 1] < data.idealTempMin) {
-              c.tooCold = true
-            }
-          }
-          c.tempAlert()
-
-        }, updateDelay)
-      }
-
+        }, updateDelay) // set interval
+      } // displayTempGraph
+      c.displayTempGraph('#graph', 500, 250, 45, 'basis', 5000)
+    } // d3.csv data read function
 
     // ==================================================
     // D3 CODE TO POPULATE HUMIDITY GRAPH
     // ==================================================
 
+    d3.csv("temp_moisture_read.csv", humidityFunc)
 
+    function humidityFunc (data) {
+
+      var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse
+
+      data.forEach(function(d) {
+        d.day = parseDate(d.day)
+        d.humidity = +d.humidity
+      })
 
       c.displayHumidityGraph = function (id, width, height, margin, interpolation, updateDelay) {
 
         function drawHumidity () {
+
+          var minDay = data[0].day
+          var maxDay = data[data.length - 1].day
+          var minHumidity = d3.min(data, function(d){return d.humidity})
+          var maxHumidity = d3.max(data, function(d){return d.humidity})
+
           var humidityGraph = d3.select(".humidity-graph").append('svg:svg').attr("id", "humidityGraph").attr('width', '550').attr('height', '250').attr('margin', '45')
 
           // X scale
-          var xRange = d3.scale.linear().domain([d3.min(data.day), d3.max(data.day)]).range([margin, width - margin])
+          var xRange = d3.time.scale().domain([minDay, maxDay]).range([margin, width - margin])
           // Y scale
-          var yRange = d3.scale.linear().domain([1, d3.max(data.idealHumidityMax) + 10]).range([height - margin, margin])
+          var yRange = d3.scale.linear().domain([d3.min([minHumidity - 20, 0]), d3.max([maxHumidity + 20, data[0].idealHumidityMax])]).range([height - margin, margin])
 
           // Plot the x and y axes & append
           var xAxis = d3.svg.axis()
             .scale(xRange)
             .orient('bottom')
-            .ticks(14)
-            .tickSize(-(height - 71), 0, 0)
+            .ticks(6)
+            .tickSize(-d3.max([maxHumidity + 20, data[0].idealHumidityMax]) - 70, 0, 0)
 
           var yAxis = d3.svg.axis()
             .scale(yRange)
-            .ticks(6)
+            .ticks(5)
             .orient('left')
             .tickSize(-(width - margin * 2), 0, 0)
 
@@ -179,65 +222,80 @@ function chartController ($scope) {
 
           // Add the ideal temp area rectangle
           humidityGraph.append('svg:rect')
-            .attr('x', xRange(data.day[0]))
-            .attr('y', yRange(data.idealHumidityMax[0]))
-            .attr('width', xRange(d3.max(data.day)) - margin)
-            .attr('height', (yRange(data.idealHumidityMin[0]) - yRange(data.idealHumidityMax[0])))
+            .attr('x', xRange(minDay))
+            .attr('y', yRange(data[0].idealHumidityMax))
+            .attr('width', xRange(maxDay) - margin)
+            .attr('height', (yRange(data[0].idealHumidityMin) - yRange(data[0].idealHumidityMax)))
             .attr('class', 'area')
             .attr('opacity', 0.5)
 
           humidityGraph.append('svg:g')
             .append("text")
             .attr("x", width)
-            .attr("y",  yRange(data.idealHumidityMax[0]) + 30)
+            .attr("y", yRange(data[0].idealHumidityMax) + 30)
             .style("text-anchor", "middle")
             .text("Ideal Range")
 
-          // Plot the temp line & append it
+          // Plot the humidity line & append it
           var lineFunc = d3.svg.line()
             .x(function (d, i) {
-              return xRange(data.day[i])
+              return xRange(d.day)
             })
             .y(function (d, i) {
-              return yRange(data.humidity[i])
+              return yRange(d.humidity)
             })
             .interpolate(interpolation)
 
           humidityGraph.append('svg:path')
-            .attr('d', lineFunc(data.humidity))
+            .attr('d', lineFunc(data))
 
           humidityGraph.selectAll('path')
-            .data([data.humidity]) // set the new data
-            .attr('d', lineFunc(data.humidity)) // apply the new data values
+            .data([data]) // set the new data
+            .attr('d', lineFunc(data)) // apply the new data values
         }
         drawHumidity()
 
         window.humidityClear = setInterval(function () {
-          var j = data.day[13] + 1
-          data.day.push(j)
-          data.day.shift() // remove the first element of the array
-          var v = data.humidity.shift() // remove the first element of the array
-          data.humidity.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
-          d3.select('#humidityGraph').remove()
-          drawHumidity()
+
+          d3.csv("temp_moisture_read_live.csv", humidityFunc2)
+
+          function humidityFunc2 (data2) {
+            data2.forEach(function(d) {
+              d.day = parseDate(d.day)
+              d.humidity = +d.humidity
+            })
+
+            data.push(data2[0])
+            console.log('data after push: ', data)
+            data.shift()
+            console.log('data after shift: ', data)
+            // remove the old graph
+            d3.select('#humidityGraph').remove()
+            drawHumidity()
+
+          }
 
           // --- ALERT SHOW / HIDE FUNCTION --- //
-          c.letDry = false
-          c.addWater = false
-
-          c.humidAlert = function() {
-
-            if (data.humidity[data.humidity.length - 1] > data.idealHumidityMax) {
-              c.letDry = true
-            } else if (data.humidity[data.humidity.length - 1] < data.idealHumidityMin) {
-              c.addWater = true
-            }
-          }
-          c.humidAlert()
+          // c.letDry = false
+          // c.addWater = false
+          //
+          // c.humidAlert = function() {
+          //
+          //   if (data.humidity[data.humidity.length - 1] > data.idealHumidityMax) {
+          //     c.letDry = true
+          //   } else if (data.humidity[data.humidity.length - 1] < data.idealHumidityMin) {
+          //     c.addWater = true
+          //   }
+          // }
+          // c.humidAlert()
 
         }, updateDelay)
-      }
 
+      } // displayHumidityGraph
+
+    c.displayHumidityGraph('#humidityGraph', 500, 250, 45, 'basis', 5000)
+
+    } // d3.csv humidity read function
 
     // ==================================================
     // D3 CODE TO POPULATE DOUGHNUT
@@ -360,9 +418,12 @@ function chartController ($scope) {
         .text(function (d, i) {
           return c.data[i].label
         })
-    }
-    c.displayTempGraph('#graph', 500, 250, 45, 'basis', 1500); c.displayHumidityGraph('#humidityGraph', 500, 250, 45, 'basis', 1500); c.displayDoughnut()
-  })
-  })
-}
-}())
+    } // c.displayDoughnut function
+
+    c.displayDoughnut()
+
+  }) // $scope.$on wait until page is loaded
+
+} // Chart controller
+
+}()) // IIFE

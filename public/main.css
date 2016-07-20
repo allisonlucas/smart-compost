@@ -39,7 +39,7 @@ body {
 
 .svg-div {
     margin: 25px;
-    margin-left: 150px;
+    margin-left: 130px;
 }
 
 #donut-form {
@@ -65,9 +65,13 @@ rect {
     height: 50px;
 }
 
-.card {
+.graph-image {
   width: 595px;
   display: inline-block;
+}
+
+#copyright {
+  font-size: 10px;
 }
 
 .temp-graph,
@@ -77,6 +81,7 @@ rect {
 	fill: none;
   margin: 25px;
 	display: inline-block;
+  height: 250px;
 	/*vertical-align: top*/
 }
 

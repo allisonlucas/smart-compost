@@ -43,7 +43,6 @@
           <ul class="right hide-on-med-and-down">
             <li><span ng-if="hCtrl.loggedInUser"><a ui-sref="tracker">Tracker</a></span></li>
             <li><a ui-sref="compost-this">Compost This</a></li>
-            <li><a href="collapsible.html">The Basics</a></li>
             <li>
               <span ng-if="hCtrl.loggedInUser">
                 <a class="dropdown-button" data-beloworigin="true" alignment="right" constrainwidth="true" data-activates="dropdown1">{{ hCtrl.loggedInUser }}<i class="material-icons right">arrow_drop_down</i></a>
@@ -52,7 +51,7 @@
                   <li><a href="#!">Profile</a></li>
                   <li><a href="#!">Account</a></li>
                   <li class="divider"></li>
-                  <li><a href="#!">Logout</a></li>
+                  <li><a href="#!" ng-click="hCtrl.logout()">Logout</a></li>
                 </ul>
                 <script>
                   $(document).ready(function(){
