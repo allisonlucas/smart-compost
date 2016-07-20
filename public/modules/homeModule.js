@@ -27,7 +27,7 @@
           .then(function (response) {
             $state.go('welcome')
             hCtrl.loggedInUser = response.data.username
-            console.log("response from server create method",response)
+            // console.log("response from server create method",response)
           }, function(error){
             console.log("err in create method", error)
           })
@@ -45,12 +45,10 @@
           console.log('err in login method', error)
         })
       }
-      console.log(this);
 
       hCtrl.parallaxCall = function () {
         // AJAX call for parallax function
         $('.parallax').parallax()
-        console.log($('.parallax'))
       }
     }
 

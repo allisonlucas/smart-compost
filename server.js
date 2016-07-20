@@ -6,7 +6,7 @@ var logger = require('morgan')
 var path = require('path')
 var mongoose = require('mongoose')
 var apiRoutes = require('./api_routes') //module.exports = apiRouter
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 80
 
 // Connect to DB
 mongoose.connect('mongodb://localhost/compost_db', function(err){

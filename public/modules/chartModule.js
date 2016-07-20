@@ -2,8 +2,21 @@
   angular.module('chartModule', [])
     .controller('chartCtrl', chartController)
 
-function chartController () {
+chartController.$inject = ['$scope']
+
+function chartController ($scope) {
   var c = this
+
+  $scope.$on('$viewContentLoaded', function(event){
+    console.log('this is running after page load', event)
+    // Clear interval
+    clearInterval(window.tempClear)
+    clearInterval(window.humidityClear)
+    d3.select('#graph').remove()
+    d3.select('#humidityGraph').remove()
+    // $('.temp-graph').html('')
+    // $('.humidity-graph').html('')
+
 
   // ==================================================
   // D3 CODE TO POPULATE TEMP GRAPH
@@ -89,7 +102,7 @@ function chartController () {
         }
         draw()
 
-        setInterval(function () {
+        window.tempClear = setInterval(function () {
           var j = data.day[13] + 1
           data.day.push(j)
           data.day.shift() // remove the first element of the array
@@ -97,30 +110,30 @@ function chartController () {
           data.temp.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
           d3.select('#graph').remove()
           draw()
-          // c.tooHot;
-          // c.tooCold;
+
+          // --- ALERT SHOW / HIDE FUNCTION --- //
+          c.tooHot = false
+          c.tooCold = false
 
           c.tempAlert = function() {
-            // console.log(data.temp[data.temp.length - 1], 'value')
             if (data.temp[data.temp.length - 1] > data.idealTempMax) {
-              console.log(data.temp[data.temp.length - 1], 'value inside if')
               c.tooHot = true
             } else if (data.temp[data.temp.length - 1] < data.idealTempMin) {
-              console.log(data.temp[data.temp.length - 1], 'value inside else if - too cold')
               c.tooCold = true
             }
           }
           c.tempAlert()
+
         }, updateDelay)
       }
-    })
+
 
     // ==================================================
     // D3 CODE TO POPULATE HUMIDITY GRAPH
     // ==================================================
-    console.log('called twice?')
-    d3.json("compostHardcodeDb.json", function (data) {
-      console.log('called again?')
+
+
+
       c.displayHumidityGraph = function (id, width, height, margin, interpolation, updateDelay) {
 
         function drawHumidity () {
@@ -199,7 +212,7 @@ function chartController () {
         }
         drawHumidity()
 
-        setInterval(function () {
+        window.humidityClear = setInterval(function () {
           var j = data.day[13] + 1
           data.day.push(j)
           data.day.shift() // remove the first element of the array
@@ -207,23 +220,24 @@ function chartController () {
           data.humidity.push(v) // add a new element to the array (we're just taking the number we just shifted off the front and appending to the end)
           d3.select('#humidityGraph').remove()
           drawHumidity()
+
+          // --- ALERT SHOW / HIDE FUNCTION --- //
           c.letDry = false
           c.addWater = false
-          console.log('c.letDry: ', c.letDry, 'c.addWater: ', c.addWater)
+
           c.humidAlert = function() {
-            console.log('data: ', data.humidity, 'ideal max: ', data.idealHumidityMax)
+
             if (data.humidity[data.humidity.length - 1] > data.idealHumidityMax) {
               c.letDry = true
-              console.log('let dry is true')
             } else if (data.humidity[data.humidity.length - 1] < data.idealHumidityMin) {
               c.addWater = true
-              console.log('add water is true')
             }
           }
           c.humidAlert()
+
         }, updateDelay)
       }
-    })
+
 
     // ==================================================
     // D3 CODE TO POPULATE DOUGHNUT
@@ -247,11 +261,12 @@ function chartController () {
     ]
 
     c.weightObj = {
-      green: [0],
-      brown: [0]
+      green: [5],
+      brown: [5]
     }
 
     c.submit = function () {
+      console.log('submit donut form function')
       if (c.color == 'Brown') {
         c.weightObj.brown.push(c.weight)
         var brownTotal = c.weightObj.brown.reduce(function (a, b) {
@@ -281,10 +296,12 @@ function chartController () {
       c.color = ''
 
       d3.select('#donut').remove()
-      drawDoughnut()
+      c.displayDoughnut()
 
+      // --- ALERT SHOW / HIDE FUNCTION --- //
       c.showMoreBrown = false
       c.showLessBrown = false
+
       c.showFunc = function() {
         if (percentBrown > 60) {
             c.showLessBrown = true
@@ -293,7 +310,12 @@ function chartController () {
         }
       }
     }
+
     c.displayDoughnut = function () {
+      console.log('data: ', c.data, c.weightObj)
+      console.log('display donut called')
+      console.log($('.svg-div'))
+
       var vis = d3.select(".svg-div")
         .append("svg")
         .attr("id", "donut")
@@ -302,6 +324,8 @@ function chartController () {
         .attr('height', h)
         .append('svg:g')
         .attr('transform', 'translate(' + r + ',' + r + ')')
+
+        console.log('vis?', vis)
 
       var arc = d3.svg.arc()
         .outerRadius(r)
@@ -337,5 +361,8 @@ function chartController () {
           return c.data[i].label
         })
     }
-  }
+    c.displayTempGraph('#graph', 500, 250, 45, 'basis', 1500); c.displayHumidityGraph('#humidityGraph', 500, 250, 45, 'basis', 1500); c.displayDoughnut()
+  })
+  })
+}
 }())

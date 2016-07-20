@@ -39,6 +39,12 @@ body {
 
 .svg-div {
     margin: 25px;
+    margin-left: 150px;
+}
+
+#donut-form {
+  margin-left: 25px;
+  clear: left;
 }
 
 #donut text {

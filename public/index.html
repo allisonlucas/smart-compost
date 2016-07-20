@@ -41,11 +41,7 @@
         <div class="nav-wrapper">
           <a ui-sref="home" id="logo-container" class="brand-logo">Smart Compost</a>
           <ul class="right hide-on-med-and-down">
-            <li>
-              <!-- <span ng-if="hCtrl.loggedInUser"> -->
-              <a ui-sref="tracker">Tracker</a>
-            <!-- </span> -->
-          </li>
+            <li><span ng-if="hCtrl.loggedInUser"><a ui-sref="tracker">Tracker</a></span></li>
             <li><a ui-sref="compost-this">Compost This</a></li>
             <li><a href="collapsible.html">The Basics</a></li>
             <li>
@@ -92,8 +88,8 @@
                 <label for="icon_key">Password</label>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn-large modal-action modal-close waves-effect waves-light red lighten-1">Login</button>
+            <div class="modal-footer" ng-controller="chartCtrl as c">
+              <button type="submit" class="btn-large modal-action modal-close waves-effect waves-light red lighten-1" ng-click="c.displayTempGraph('#graph', 500, 250, 45, 'basis', 1500); c.displayHumidityGraph('#humidityGraph', 500, 250, 45, 'basis', 1500); c.displayDoughnut()">Login</button>
             </div>
           </form>
         </div>
