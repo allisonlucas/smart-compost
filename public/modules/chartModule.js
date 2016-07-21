@@ -53,7 +53,7 @@ function chartController ($scope) {
             .scale(xRange)
             .orient('bottom')
             .ticks(6)
-            .tickSize((-maxTemp + 20), 0, 0)
+            .tickSize(-d3.max([maxTemp + 20, data[0].idealTempMax]) + 20, 0, 0)
 
           var yAxis = d3.svg.axis()
             .scale(yRange)
