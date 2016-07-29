@@ -54,7 +54,7 @@ module.exports = {
           else {
             console.info('hCtrl.login.user =', user)
                 // If we got this far, then we know that the user exists. But did they put in the right password?
-                bcrypt.compare(req.body.password, user.password, (bcryptErr, matched)=>{
+                bcrypt.compare(req.body.password, user.password, function (bcryptErr, matched) {
                     if (bcryptErr) {
                         console.error('Error decrypting password:', bcryptErr)
                         res.status(500).send(errors.general)
