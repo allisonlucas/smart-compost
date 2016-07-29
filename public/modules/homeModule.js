@@ -3,14 +3,21 @@
   angular.module('homeModule', [])
     .controller('homeCtrl', homeController)
 
-    homeController.$inject = ['userFact', '$state']
+    homeController.$inject = ['userFact', '$state', '$http']
 
-    function homeController(userFact, $state){
+    function homeController(userFact, $state, $http){
       var hCtrl = this
       hCtrl.loggedInUser = ''
 
-      hCtrl.logout = function () {
-        hCtrl.loggedInUser = ''
+      hCtrl.logout = function (user) {
+        userFact.logout(user)
+          .then(function (response) {
+            hCtrl.loggedInUser = ''
+            console.log('username: ', hCtrl.loggedInUser)
+          }, function(error){
+            console.log('err in logout method', error)
+            hCtrl.logout.message = 'Logout error'
+          })
       }
 
       hCtrl.findAll = function(){
@@ -34,6 +41,7 @@
             // console.log("response from server create method",response)
           }, function(error){
             console.log("err in create method", error)
+            hCtrl.createUser.message = 'Sign-up error'
           })
       }
 
@@ -47,6 +55,7 @@
           console.log(hCtrl)
         }, function(error){
           console.log('err in login method', error)
+          hCtrl.login.message = 'Login error'
         })
       }
 
