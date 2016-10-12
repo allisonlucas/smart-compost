@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular-google-maps": "^2.3.4",
+    "angular-simple-logger": "^0.1.7",
     "cheerio": "^0.20.0",
     "client-sessions": "^0.7.0",
+    "lodash": "^4.15.0",
     "request": "^2.73.0"
   }
 }

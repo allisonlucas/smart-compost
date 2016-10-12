@@ -15,6 +15,10 @@
           templateUrl: 'partials/compost-this.html',
           controller: 'listCtrl as lCtrl'
         })
+        .state('resources',{
+          url: '/resources',
+          templateUrl: 'partials/resources.html'
+        })
         .state('tracker',{
           url: '/tracker',
           templateUrl: 'partials/tracker.html',

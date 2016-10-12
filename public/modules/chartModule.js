@@ -21,7 +21,7 @@ function chartController ($scope) {
     // D3 CODE TO POPULATE TEMP GRAPH
     // ==================================================
 
-    d3.csv("temp_moisture_read.csv", tempFunc)
+    d3.csv("temp_moisture_read_hardcode.csv", tempFunc)
 
     function tempFunc (data) {
 
@@ -120,7 +120,7 @@ function chartController ($scope) {
 
         window.tempClear = setInterval(function () {
 
-          d3.csv("temp_moisture_read_live.csv", tempFunc2)
+          d3.csv("temp_moisture_read_live_hardcode.csv", tempFunc2)
 
           function tempFunc2 (data2) {
             data2.forEach(function(d) {
@@ -160,7 +160,7 @@ function chartController ($scope) {
     // D3 CODE TO POPULATE HUMIDITY GRAPH
     // ==================================================
 
-    d3.csv("temp_moisture_read.csv", humidityFunc)
+    d3.csv("temp_moisture_read_hardcode.csv", humidityFunc)
 
     function humidityFunc (data) {
 
@@ -257,7 +257,7 @@ function chartController ($scope) {
 
         window.humidityClear = setInterval(function () {
 
-          d3.csv("temp_moisture_read_live.csv", humidityFunc2)
+          d3.csv("temp_moisture_read_live_hardcode.csv", humidityFunc2)
 
           function humidityFunc2 (data2) {
             data2.forEach(function(d) {

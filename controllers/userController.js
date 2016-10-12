@@ -18,14 +18,6 @@ var errors = { // response errors
 module.exports = {
     // CREATE USERS CONTROLLER FOR ROUTE HANDLERS
     usersController: {
-      // render: function(req, res) {
-      //   res.render('home.html', req.session) // render the authenticaiton page (register/login)
-      // },
-      // welcome: function(req, res) {
-      //   if (req.session.username) {
-      //     res.redirect('/welcome')
-      //   }
-      // }
       all: function(req, res){
           console.log("Querying db for all user objects!")
           User.find({},function(error,users){

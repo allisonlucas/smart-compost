@@ -18,13 +18,16 @@ var sessions = require('client-sessions')({ // session cookie
             secure: false       // when true, cookie will only be sent over SSL;
         }
     })
-var port = process.env.PORT || 80
+var port = process.env.PORT || 3000
 
 // Connect to DB
-mongoose.connect('mongodb://localhost/compost_db', function(err){
-  if(err) console.log("Err connecting to mongodb")
-  if(!err) console.log("Success connecting to mongodb")
-})
+mongoose.connect(
+  // 'mongodb://localhost/compost_db',
+  'mongodb://dummy:dummyDB@ec2-52-42-79-194.us-west-2.compute.amazonaws.com:27017/dummyDB',
+  function(err){
+    if(err) console.log("Err connecting to mongodb")
+    if(!err) console.log("Success connecting to mongodb")
+  })
 
 // Application Configuration, apply middleware
 app.use(logger('dev')) // Log all in-coming routes

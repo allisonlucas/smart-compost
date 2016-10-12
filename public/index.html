@@ -43,6 +43,7 @@
           <ul class="right hide-on-med-and-down">
             <li><span ng-if="hCtrl.loggedInUser"><a ui-sref="tracker">Tracker</a></span></li>
             <li><a ui-sref="compost-this">Compost This</a></li>
+            <li><a ui-sref="resources">Resources</a></li>
             <li>
               <span ng-if="hCtrl.loggedInUser">
                 <a class="dropdown-button" data-beloworigin="true" alignment="right" constrainwidth="true" data-activates="dropdown1">{{ hCtrl.loggedInUser }}<i class="material-icons right">arrow_drop_down</i></a>
@@ -135,5 +136,10 @@
         <script type="text/javascript" src="./modules/signupModule.js"></script>
         <script type="text/javascript" src="./modules/listModule.js"></script>
         <script type="text/javascript" src="./modules/d3.layout.cloud.js"></script>
+        <script type="text/javascript" src="./modules/mapModule.js"></script>
+
+        <script src='./modules/lodash.min.js'></script>
+        <script src='./modules/angular-simple-logger.min.js'></script>
+        <script src='./modules/angular-google-maps.min.js'></script>
   </body>
 </html>
